@@ -1,0 +1,245 @@
+import React, { useState } from 'react';
+import { User, Clock, Utensils, Dumbbell, ChevronRight } from 'lucide-react';
+
+const ThyroidNutritionApp = () => {
+  const [activeTab, setActiveTab] = useState('breakfast');
+
+  const tabs = [
+    { id: 'breakfast', label: 'Breakfast', icon: Utensils },
+    { id: 'lunch', label: 'Lunch', icon: Utensils },
+    { id: 'dinner', label: 'Dinner', icon: Utensils },
+    { id: 'preworkout', label: 'Pre-Workout', icon: Dumbbell },
+    { id: 'postworkout', label: 'Post-Workout', icon: Dumbbell }
+  ];
+
+
+
+  const MealPage = ({ title, timeFrame, nutritionalFocus, suggestedIngredients, meals, snacks }) => (
+    <div className="space-y-6">
+      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-6">
+        <h2 className="text-2xl font-bold mb-2">{title}</h2>
+        {timeFrame && <p className="text-blue-100 mb-4">{timeFrame}</p>}
+        <div className="bg-white/10 rounded-lg p-4 mb-4">
+          <h3 className="font-semibold mb-2">Nutritional Focus:</h3>
+          <p className="text-sm text-blue-100">{nutritionalFocus}</p>
+        </div>
+        <div className="bg-white/10 rounded-lg p-4">
+          <h3 className="font-semibold mb-2">Suggested Ingredients:</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-blue-100">
+            {suggestedIngredients.map((ingredient, index) => (
+              <div key={index} className="flex items-center space-x-2">
+                <div className="w-1.5 h-1.5 bg-blue-200 rounded-full"></div>
+                <span>{ingredient}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-sm border p-6">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Meal Options</h3>
+        <div className="space-y-3">
+          {meals.map((meal, index) => (
+            <div key={index} className="flex items-start space-x-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+              <ChevronRight className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <h4 className="font-medium text-gray-800">{meal.name}</h4>
+                <p className="text-sm text-gray-600">{meal.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {snacks && (
+        <div className="bg-white rounded-lg shadow-sm border p-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Snack Options</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {snacks.map((snack, index) => (
+              <div key={index} className="flex items-center space-x-2 text-sm text-gray-700">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>{snack}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'breakfast':
+        return (
+          <MealPage
+            title="Breakfast"
+            timeFrame="5AM - 12PM"
+            nutritionalFocus="Iodine (150-200 mcg), Selenium (55-70 mcg), Zinc (8-11 mg), Iron (8-18 mg). Higher protein intake (25-30% of breakfast calories) with moderate complex carbohydrates to kickstart metabolism and support morning thyroid hormone activation."
+            suggestedIngredients={[
+              "Brazil nuts", "Eggs", "Seaweed/kelp", "Spinach", "Pumpkin seeds", "Greek yogurt", "Oats", "Sardines", "Mushrooms", "Sunflower seeds", "Cashew butter", "Hemp seeds"
+            ]}
+            meals={[
+              { name: "Selenium-Rich Scramble", description: "3 eggs + 1 Brazil nut (chopped) + spinach + mushrooms" },
+              { name: "Iron-Boosted Oatmeal", description: "Steel-cut oats + pumpkin seeds + dried apricots + fortified plant milk" },
+              { name: "Iodine Power Bowl", description: "Greek yogurt + seaweed flakes + berries + sunflower seeds" },
+              { name: "Zinc-Rich Smoothie", description: "Protein powder + cashew butter + banana + fortified almond milk" },
+              { name: "Thyroid Toast", description: "Whole grain bread + avocado + hemp seeds + sea salt" },
+              { name: "Morning Parfait", description: "Greek yogurt + mixed nuts + berries + chia seeds" }
+            ]}
+            snacks={[
+              "Apple slices with almond butter",
+              "Trail mix (Brazil nuts, pumpkin seeds, dried fruit)",
+              "Hard-boiled egg with whole grain crackers"
+            ]}
+          />
+        );
+      
+      case 'lunch':
+        return (
+          <MealPage
+            title="Lunch"
+            timeFrame="12PM - 5PM"
+            nutritionalFocus="Vitamin A (700-900 mcg RAE), B12 (2.4 mcg), Vitamin D (600-800 IU), Magnesium (310-420 mg). Balanced macronutrients with moderate complex carbohydrates (40-50% of lunch calories) to sustain energy and support T4 to T3 conversion."
+            suggestedIngredients={[
+              "Sweet potatoes", "Carrots", "Salmon", "Nutritional yeast", "Black beans", "Tahini", "Sardines", "Pepitas", "Chickpeas", "Feta cheese", "Avocado", "Leafy greens"
+            ]}
+            meals={[
+              { name: "Vitamin A Power Salad", description: "Mixed greens + roasted sweet potato + carrots + pepitas + salmon" },
+              { name: "B12 Boost Bowl", description: "Quinoa + black beans + nutritional yeast + roasted vegetables + tahini dressing" },
+              { name: "Magnesium-Rich Wrap", description: "Whole wheat tortilla + hummus + spinach + avocado + turkey + sunflower seeds" },
+              { name: "D-Vitamin Delight", description: "Sardine and avocado toast + side salad with olive oil dressing" },
+              { name: "Thyroid Support Soup", description: "Lentil and vegetable soup + fortified nutritional yeast + whole grain roll" },
+              { name: "Mediterranean Bowl", description: "Brown rice + chickpeas + roasted vegetables + feta + olive oil" }
+            ]}
+            snacks={[
+              "Hummus with colorful bell peppers",
+              "Mixed nuts and dried fruit",
+              "Greek yogurt with granola"
+            ]}
+          />
+        );
+      
+      case 'dinner':
+        return (
+          <MealPage
+            title="Dinner"
+            timeFrame="5PM - 10PM"
+            nutritionalFocus="Protein (20-25% of dinner calories), Healthy Fats (20-35% of dinner calories), Copper (900 mcg), Vitamin E (15 mg), L-tyrosine. Evening nutrition emphasizes repair and recovery while supporting overnight thyroid hormone production."
+            suggestedIngredients={[
+              "Salmon", "Turkey", "Almonds", "Sunflower oil", "Brussels sprouts", "Mackerel", "Tahini", "Turkey breast", "Coconut milk", "Pine nuts", "Dark chocolate", "Olive oil"
+            ]}
+            meals={[
+              { name: "Copper-Rich Salmon", description: "Baked salmon + roasted Brussels sprouts + sweet potato + olive oil drizzle" },
+              { name: "Vitamin E Stir-Fry", description: "Tofu or chicken + broccoli + almonds + sunflower oil + brown rice" },
+              { name: "L-Tyrosine Turkey", description: "Roasted turkey breast + quinoa stuffing + steamed vegetables + avocado" },
+              { name: "Healthy Fat Fish", description: "Mackerel or sardines + roasted vegetables + tahini sauce + wild rice" },
+              { name: "Thyroid-Support Chili", description: "Turkey and bean chili + cornbread + side salad" },
+              { name: "Nourishing Curry", description: "Lentil curry with coconut milk + basmati rice + steamed greens" }
+            ]}
+            snacks={[
+              "Small handful of mixed nuts",
+              "Herbal tea with dark chocolate",
+              "Greek yogurt with honey drizzle"
+            ]}
+          />
+        );
+      
+      case 'preworkout':
+        return (
+          <MealPage
+            title="Pre-Workout"
+            timeFrame="60-90 minutes before training"
+            nutritionalFocus="Complex carbohydrates (30-45g), moderate protein (15-20g), B vitamins, and magnesium. Consumed 60-90 minutes before training to provide sustained energy while supporting thyroid function during exercise stress."
+            suggestedIngredients={[
+              "Oats", "Bananas", "Almond butter", "Berries", "Protein powder", "Spinach", "Greek yogurt", "Dates", "Brown rice", "Hemp seeds"
+            ]}
+            meals={[
+              { name: "Power Oatmeal", description: "1/2 cup oats + banana + 1 tbsp almond butter + cinnamon" },
+              { name: "Energizing Smoothie", description: "Banana + berries + protein powder + oat milk + spinach" },
+              { name: "Balanced Toast", description: "Whole grain bread + mashed banana + 2 tbsp Greek yogurt + hemp seeds" },
+              { name: "Quick Bowl", description: "Brown rice + steamed vegetables + small portion of lean protein" }
+            ]}
+            snacks={[
+              "Banana with 1 tbsp nut butter",
+              "Handful of dates with almonds",
+              "Small bowl of berries with Greek yogurt"
+            ]}
+          />
+        );
+      
+      case 'postworkout':
+        return (
+          <MealPage
+            title="Post-Workout"
+            timeFrame="Within 30-45 minutes after training"
+            nutritionalFocus="Protein (20-30g), fast-absorbing carbohydrates (30-45g), magnesium, zinc, and B vitamins. Consumed within 30-45 minutes after training to optimize recovery and support thyroid hormone synthesis during the repair process."
+            suggestedIngredients={[
+              "Protein powder", "Bananas", "Berries", "Greek yogurt", "Granola", "Turkey", "Chocolate milk", "Chia seeds", "Spinach", "Nuts", "Honey"
+            ]}
+            meals={[
+              { name: "Protein Power Smoothie", description: "Protein powder + banana + berries + spinach + almond milk + chia seeds" },
+              { name: "Recovery Bowl", description: "Greek yogurt + granola + berries + nuts + honey drizzle" },
+              { name: "Muscle Repair Wrap", description: "Whole wheat tortilla + turkey + avocado + spinach + hummus" },
+              { name: "Quick Recovery", description: "Chocolate milk + handful of nuts (if dairy tolerant)" }
+            ]}
+            snacks={[
+              "Protein shake with banana",
+              "Greek yogurt with berries and granola",
+              "Hard-boiled eggs with whole grain crackers"
+            ]}
+          />
+        );
+      
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <h1 className="text-2xl font-bold text-gray-800">Thyroid Supporting Nutrition</h1>
+          <p className="text-gray-600 mt-1">Personalized meal planning for optimal thyroid health</p>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Navigation Sidebar */}
+          <div className="lg:w-64 flex-shrink-0">
+            <div className="bg-white rounded-lg shadow-sm border p-4">
+              <nav className="space-y-2">
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                        activeTab === tab.id
+                          ? 'bg-blue-500 text-white'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1">
+            {renderContent()}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ThyroidNutritionApp;
